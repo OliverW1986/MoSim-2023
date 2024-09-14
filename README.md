@@ -18,6 +18,7 @@ The download link is in the release page.
 Known Bugs/Issues:
 1. Multiplayer, keybinds menu, match score summary, and the Driver Station view are not implemented
 2. Resolution, FPS, selected monitor, and movement and rotation speed sliders currently don't do anything
-3. Robots are slowed down massivly when pushing a game piece
+3. Robots are slowed down massively when pushing a game piece
 4. Red bumper numbers are currently goofed up
 5. Red charge station is very wobbly (currently playing on blue is recommended)
+6. Red mobility is not working
