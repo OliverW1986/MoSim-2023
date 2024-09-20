@@ -16,7 +16,7 @@ The download link is in the release page.
 <br />
 
 Known Bugs/Issues:
-1. Multiplayer, keybinds menu, match score summary, and the Driver Station view are not implemented
+1. Multiplayer, keybinds menu, and the match score summary are not implemented
 2. Resolution, FPS, selected monitor, and movement and rotation speed sliders currently don't do anything
 3. Robots are slowed down massively when pushing a game piece
 4. Red bumper numbers are currently goofed up
