@@ -39,6 +39,7 @@ public class DriveController : MonoBehaviour
     public static bool isPinningRed;
     public static bool isPinningBlue;
     public bool isIntaking;
+    public bool intakeForce;
 
     private Rigidbody _rb;
     private Vector2 _translateValue;
@@ -81,7 +82,10 @@ public class DriveController : MonoBehaviour
 
     private ChargeStation _chargeStation;
 
-    private void Start()
+    public bool canRotate = true;
+    public bool canTranslate = true;
+
+    protected void Start()
     {
         canIntake = true;
 
@@ -304,7 +308,7 @@ public class DriveController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    protected void FixedUpdate()
     {
         if (GameManager.canRobotMove)
         {
@@ -318,7 +322,7 @@ public class DriveController : MonoBehaviour
                 _translateValue.x = Mathf.Sign(_translateValue.x) * Mathf.Pow(Mathf.Abs(_translateValue.x), 2f);
                 _translateValue.y = Mathf.Sign(_translateValue.y) * Mathf.Pow(Mathf.Abs(_translateValue.y), 2f);
 
-                _rotateValue = _rotateAction.ReadValue<float>();
+                _rotateValue = canRotate ? _rotateAction.ReadValue<float>() : 0;
 
                 if (_cameraMode != CameraMode.FirstPerson)
                 {
@@ -329,10 +333,17 @@ public class DriveController : MonoBehaviour
                     moveDirection = transform.forward * _translateValue.y + transform.right * _translateValue.x;
                 }
 
-                _rb.AddForce(moveDirection * moveSpeed);
+                if(canTranslate)
+                {
+                    _rb.AddForce(moveDirection * moveSpeed);
+                }
 
-                _rb.AddTorque(new Vector3(0f, _rotateValue * rotationSpeed, 0f));
-                _rb.angularVelocity = Vector3.ClampMagnitude(_rb.angularVelocity, maxAngularVelocity);
+                if(canRotate)
+                {
+                    _rb.AddTorque(new Vector3(0f, _rotateValue * rotationSpeed, 0f));
+                    _rb.angularVelocity = Vector3.ClampMagnitude(_rb.angularVelocity, maxAngularVelocity);
+                }
+                
 
                 velocity = _rb.linearVelocity;
             }
@@ -349,6 +360,11 @@ public class DriveController : MonoBehaviour
                 StopSwerveSounds();
             }
         }
+    }
+
+    public void forceIntake(bool value)
+    {
+        intakeForce = value;
     }
 
     private void PlaySwerveSounds()

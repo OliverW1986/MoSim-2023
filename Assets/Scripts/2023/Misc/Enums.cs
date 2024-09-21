@@ -8,7 +8,8 @@ public enum Alliance
 public enum RobotSettings
 {
     JackInTheBot,
-    Bread
+    Bread,
+    MechanicalAdvantage
 }
 
 public enum GameState 

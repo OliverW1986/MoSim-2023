@@ -53,6 +53,23 @@ public class GameManager : MonoBehaviour
 
     public static bool endBuzzerPlaying;
 
+    //Provides position data for auto-tracking targets
+    public static Link[] redHigh;
+    public static Link[] redMid;
+    public static Link[] redLow;
+
+    public static Link[] blueHigh;
+    public static Link[] blueMid;
+    public static Link[] blueLow;
+
+    [SerializeField] private Link[] localRedHigh;
+    [SerializeField] private Link[] localRedMid;
+    [SerializeField] private Link[] localRedLow;
+
+    [SerializeField] private Link[] localBlueHigh;
+    [SerializeField] private Link[] localBlueMid;
+    [SerializeField] private Link[] localBlueLow;
+
     private void Start()
     {
         _swerveControllers = FindObjectsByType<DriveController>(FindObjectsSortMode.None);
@@ -70,6 +87,15 @@ public class GameManager : MonoBehaviour
         canRobotMove = true;
         
         robotSpawnController = GameObject.Find("RobotSpawnController").GetComponent<RobotSpawnController>();
+
+        //Making these static allows the prefab system to work more easily.
+        redHigh = localRedHigh;
+        redMid = localRedMid;
+        redLow = localRedLow;
+
+        blueHigh = localBlueHigh;
+        blueMid = localBlueMid;
+        blueLow = localBlueLow;
     }
 
     //Methods runs once every update timestep

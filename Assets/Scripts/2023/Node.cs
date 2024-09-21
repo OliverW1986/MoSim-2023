@@ -53,4 +53,9 @@ public class Node : MonoBehaviour
     {
         return other.bounds.Contains(inner.bounds.min) && other.bounds.Contains(inner.bounds.max);
     }
+
+    public Vector3 center()
+    {
+        return GetComponent<Transform>().position;
+    }
 }
