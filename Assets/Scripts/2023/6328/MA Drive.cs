@@ -28,6 +28,8 @@ public class MADrive : DriveController
     private bool stopAlignmentAxis = false;
     private float hardTarget = 0;
 
+    public bool autoAlign = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -43,7 +45,7 @@ public class MADrive : DriveController
     {
         base.FixedUpdate();
 
-        if (arm.isScoring() && pieceManager.hasGamePiece)
+        if (arm.isScoring() && pieceManager.hasGamePiece && autoAlign)
         {
             canRotate = false;
             rb.angularVelocity = Vector3.zero;
