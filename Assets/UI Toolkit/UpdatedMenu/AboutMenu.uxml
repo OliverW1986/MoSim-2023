@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style
+        src="project://database/Assets/UI%20Toolkit/UpdatedMenu/MainMenu.uss?fileID=7433441132597879392&amp;guid=a5a29638a79bf3e4d850b331a84d8ea1&amp;type=3#MainMenu" />
+    <ui:VisualElement name="Container" class="content-container">
+        <ui:Label text="MoSim &#10;Charged Up" class="title" />
+        <ui:Button text="PLAY" name="Play" class="button" style="margin-top: 275px;" />
+        <ui:Button text="SETTINGS" name="Settings" class="button" />
+        <ui:Button text="ABOUT" name="About" class="button" />
+        <ui:Button text="QUIT" name="Quit" class="button" />
+    </ui:VisualElement>
+</ui:UXML>

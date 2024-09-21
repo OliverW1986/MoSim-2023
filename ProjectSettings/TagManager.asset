@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Zone
+  - ChainLink
+  - RedPlayer
+  - Wall
+  - Field
+  - ignore
+  - Ground
+  - Destroying
+  - Player2
+  - RedPlayer2
+  - Cone
+  - Cube
+  - Node
+  - Placed
+  - PanCam
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Ground
+  - Water
+  - UI
+  - Robot
+  - Cone
+  - PostProcessing
+  - InMyWay
+  - Hangers
+  - RobotRigidbodyPlsIgnore
+  - RobotIgnore
+  - Field
+  - Cube
+  - RedCam
+  - NoteIgnore
+  - IgnoreAllCollisions
+  - IgnoreRings
+  - DontCollideWithField
+  - BlueCam
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  m_RenderingLayers:
+  - Default

@@ -1,0 +1,25 @@
+#scoreboardContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #2d2d2d;
+}
+
+#blueAlliance, #redAlliance {
+    padding: 10px;
+    border-radius: 8px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+#timerSection {
+    text-align: center;
+    padding: 10px;
+}
+
+#gamepadIcon {
+    background-size: cover;
+    margin-top: 5px;
+}

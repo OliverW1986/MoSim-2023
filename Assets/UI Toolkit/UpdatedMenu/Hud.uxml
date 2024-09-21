@@ -1,0 +1,23 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/UpdatedMenu/HUD.uss?fileID=7433441132597879392&amp;guid=723a46a2c3d10b14cab0963bbf259c09&amp;type=3#HUD" />
+    <engine:VisualElement name="scoreboardContainer" style="flex-direction: row; justify-content: space-between;">
+        <engine:VisualElement name="blueAlliance" style="flex-direction: column; background-color: rgb(0, 92, 191);">
+            <engine:Label text="Alliance 3" style="font-size: 14px; color: white; transform-origin: left bottom;" />
+            <engine:Label text="2539" style="font-size: 12px; color: white;" />
+            <engine:Label text="1923" style="font-size: 12px; color: white;" />
+            <engine:Label text="484" style="font-size: 12px; color: white;" />
+            <engine:Label text="126" style="font-size: 28px; color: white;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="timerSection" style="align-items: center;">
+            <engine:Label text="48" style="font-size: 48px; font-weight: bold;" />
+            <engine:VisualElement name="gamepadIcon" style="background-image: url(&apos;/path/to/gamepad-icon.png&apos;); width: 48px; height: 48px;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="redAlliance" style="flex-direction: column; background-color: rgb(208, 0, 0);">
+            <engine:Label text="Alliance 2" style="font-size: 14px; color: white;" />
+            <engine:Label text="3314" style="font-size: 12px; color: white;" />
+            <engine:Label text="5895" style="font-size: 12px; color: white;" />
+            <engine:Label text="3142" style="font-size: 12px; color: white;" />
+            <engine:Label text="108" style="font-size: 28px; color: white;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
