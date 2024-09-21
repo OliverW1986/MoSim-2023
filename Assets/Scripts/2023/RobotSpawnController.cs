@@ -79,6 +79,11 @@ public class RobotSpawnController : MonoBehaviour
         }
         else
         {
+            if(_blueRobotIndex >= blueRobotPrefabs.Length)
+            {
+                _blueRobotIndex = blueRobotPrefabs.Length - 1;
+            }
+
             //Set correct robots & cameras active
             if (PlayerPrefs.GetString("alliance") == "red")
             {
