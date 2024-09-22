@@ -215,21 +215,4 @@ QualitySettings:
     terrainMaxTrees: 50
     excludedTargetPlatforms: []
   m_TextureMipmapLimitGroupNames: []
-  m_PerPlatformDefaultQuality:
-    Android: 1
-    Bratwurst: 3
-    EmbeddedLinux: 3
-    GameCoreScarlett: 3
-    GameCoreXboxOne: 3
-    LinuxHeadlessSimulation: 3
-    Nintendo Switch: 3
-    PS4: 3
-    PS5: 3
-    QNX: 3
-    Server: 3
-    Standalone: 3
-    WebGL: 2
-    Windows Store Apps: 3
-    XboxOne: 3
-    iPhone: 1
-    tvOS: 1
+  m_PerPlatformDefaultQuality: {}

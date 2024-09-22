@@ -51,8 +51,12 @@ public class StrikeZoneArm : MonoBehaviour
     private InputAction _lowAction;
     private InputAction _intakeDoubleSubstationAction;
     private InputAction _intakeGroundAction;
+    private InputAction _scoreAction;
 
     public bool isTransferring = false;
+    public bool isPlacing = false;
+
+    public float startAngle;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -70,6 +74,10 @@ public class StrikeZoneArm : MonoBehaviour
         _lowAction = InputSystem.actions.FindAction("Low");
         _intakeDoubleSubstationAction = InputSystem.actions.FindAction("IntakeDoubleSubstation");
         _intakeGroundAction = InputSystem.actions.FindAction("IntakeGround");
+
+        _scoreAction = InputSystem.actions.FindAction("Place");
+
+        startAngle = upperArm.transform.eulerAngles.x;
     }
 
     // Update is called once per frame
@@ -78,21 +86,22 @@ public class StrikeZoneArm : MonoBehaviour
 
         if (GameManager.canRobotMove && !isTransferring)
         {
-            if (_stowAction.triggered)
+            if (_stowAction.triggered && _currentRobotState != RobotState.Stow)
             {
+                _currentRobotState = RobotState.Stow;
 
                 StartCoroutine(safeRetract(stowLowerTarget, stowUpperTarget));
-               
 
-                _currentRobotState = RobotState.Stow;
             }
             else if(_intakeGroundAction.WasReleasedThisFrame() || _intakeDoubleSubstationAction.WasReleasedThisFrame())
             {
                 lowerTarget = stowLowerTarget;
                 upperTarget = stowUpperTarget;
             }
-            else if (_highAction.WasPressedThisFrame())
+            else if (_highAction.WasPressedThisFrame() && _currentRobotState != RobotState.High)
             {
+                _currentRobotState = RobotState.High;
+
                 if (_robotGamePieceManager.currentGamePieceMode == GamePieceType.Cube)
                 {
                     upperTarget = highCubeUpperTarget;
@@ -104,10 +113,11 @@ public class StrikeZoneArm : MonoBehaviour
                     StartCoroutine(safeGoToPos(highConeLowerTarget, highConeUpperTarget));
                 }
 
-                _currentRobotState = RobotState.High;
             }
-            else if (_middleAction.WasPressedThisFrame())
+            else if (_middleAction.WasPressedThisFrame() && _currentRobotState != RobotState.Middle)
             {
+                _currentRobotState = RobotState.Middle;
+
                 if (_robotGamePieceManager.currentGamePieceMode == GamePieceType.Cube)
                 {
 
@@ -120,9 +130,8 @@ public class StrikeZoneArm : MonoBehaviour
 
                 }
 
-                _currentRobotState = RobotState.Middle;
             }
-            else if (_lowAction.triggered)
+            else if (_lowAction.triggered && _currentRobotState != RobotState.Low)
             {
                 lowerTarget = lowLowerTarget;
                 upperTarget = lowUpperTarget;
@@ -153,6 +162,17 @@ public class StrikeZoneArm : MonoBehaviour
             }
         }
 
+        if(
+            _scoreAction.ReadValue<float>() > 0 
+            && !isPlacing 
+            && _robotGamePieceManager.hasGamePiece 
+            && (_currentRobotState == RobotState.Middle || _currentRobotState == RobotState.High) 
+            && _robotGamePieceManager.currentGamePiece == GamePieceType.Cone
+            )
+        {
+            StartCoroutine(PlaceSequence());
+        }
+
         lowerArmSpring.targetPosition = Mathf.MoveTowards(lowerArmSpring.targetPosition, lowerTarget, lowerSpeed * Time.deltaTime);
         upperArmSpring.targetPosition = Mathf.MoveTowards(upperArmSpring.targetPosition, upperTarget, upperSpeed * Time.deltaTime);
 
@@ -163,8 +183,26 @@ public class StrikeZoneArm : MonoBehaviour
 
     }
 
+    public IEnumerator PlaceSequence()
+    {
+        _robotGamePieceManager.canPlace = false;
+        isPlacing = true;
+        upperTarget -= 15;
+
+        yield return new WaitForSeconds(0.15f);
+
+        _robotGamePieceManager.canPlace = true;
+
+        isPlacing = false;
+
+        _currentRobotState = RobotState.Stow;
+        yield return safeRetract(stowLowerTarget, stowUpperTarget);
+    }
+
     private IEnumerator safeGoToPos(float lower, float upper)
     {
+        RobotState startState = _currentRobotState;
+
         lowerTarget = intermediateLower;
         upperTarget = intermediateUpper;
 
@@ -179,16 +217,22 @@ public class StrikeZoneArm : MonoBehaviour
 
     private IEnumerator safeRetract(float lower, float upper)
     {
+        RobotState startState = _currentRobotState;
+
         lowerTarget = intermediateLower;
-        upperTarget = Mathf.MoveTowards(upperTarget, upper, Mathf.Abs(upper - upperTarget) / 2);
+        upperTarget = Mathf.MoveTowards(upperTarget, upper, Mathf.Abs(upper - upperTarget) / 3);
 
         while (lowerArmSpring.targetPosition != intermediateLower)
         {
             yield return null;
         }
 
-        lowerTarget = lower;
-        upperTarget = upper;
+        if(_currentRobotState == startState)
+        {
+            lowerTarget = lower;
+            upperTarget = upper;
+        }
+        
     }
 
     public IEnumerator goToTransfer()
@@ -197,6 +241,8 @@ public class StrikeZoneArm : MonoBehaviour
 
         lowerTarget = transferLowerTarget;
         upperTarget = transferUpperTarget;
+
+        _currentRobotState = RobotState.Transfer;
 
         while (lowerArmSpring.targetPosition != transferLowerTarget || upperArmSpring.targetPosition != transferUpperTarget)
         {
@@ -209,10 +255,15 @@ public class StrikeZoneArm : MonoBehaviour
     public void endTransfer()
     {
         isTransferring = false;
-        lowerTarget = stowLowerTarget;
-        upperTarget = stowUpperTarget;
 
-        _currentRobotState = RobotState.Stow;
+        if(_currentRobotState == RobotState.Transfer)
+        {
+            lowerTarget = stowLowerTarget;
+            upperTarget = stowUpperTarget;
+
+            _currentRobotState = RobotState.Stow;
+        }
+        
     }
 
     public bool isScoring()
@@ -227,6 +278,8 @@ public class StrikeZoneArm : MonoBehaviour
         Middle,
         Low,
         IntakeDoubleSubstation,
-        IntakeGround
+        IntakeGround,
+        Transfer
+
     }
 }

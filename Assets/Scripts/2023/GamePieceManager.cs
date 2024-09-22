@@ -388,6 +388,11 @@ public class GamePieceManager : MonoBehaviour
 
         StartCoroutine(CanNotEjectWhenRunnning());
     }
+
+    public float getPlaceLatency()
+    {
+        return placeLatency;
+    }
 }
 
 public enum GamePieceType
