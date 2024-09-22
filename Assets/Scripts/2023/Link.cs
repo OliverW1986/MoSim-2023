@@ -81,4 +81,33 @@ public class Link : MonoBehaviour
 
         return isScored;
     }
+    public bool node1Scored()
+    {
+        return _node1Scored;
+    }
+
+    public Node getNode1()
+    {
+        return node1;
+    }
+
+    public bool node2Scored()
+    {
+        return _node2Scored;
+    }
+
+    public Node getNode2()
+    {
+        return node2;
+    }
+
+    public bool node3Scored()
+    {
+        return _node3Scored;
+    }
+
+    public Node getNode3()
+    {
+        return node3;
+    }
 }
