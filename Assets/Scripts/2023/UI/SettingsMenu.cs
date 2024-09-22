@@ -142,10 +142,10 @@ namespace UI
                 _2V0Config.style.display = _gamemodeSelect.index != 2 ? DisplayStyle.None : DisplayStyle.Flex;
             });
 
-            _cameraSelect.index = PlayerPrefs.GetInt("cameraMode");
+            _cameraSelect.index = PlayerPrefs.GetInt("cameraMode", 1);
             _cameraSelect.RegisterValueChangedCallback(_ => { PlayerPrefs.SetInt("cameraMode", _cameraSelect.index); });
 
-            _allianceSelect.index = PlayerPrefs.GetString("alliance") switch
+            _allianceSelect.index = PlayerPrefs.GetString("alliance", "blue") switch
             {
                 "blue" => 0,
                 "red" => 1,
@@ -196,7 +196,7 @@ namespace UI
                 Display.displays[_displaySelect.index].Activate();
             });
 
-            var savedWindowMode = PlayerPrefs.GetInt("WindowMode", 2);
+            var savedWindowMode = PlayerPrefs.GetInt("WindowMode", 1);
             _windowModeSelect.index = savedWindowMode;
             ApplyWindowMode(savedWindowMode);
             _windowModeSelect.RegisterValueChangedCallback(_ =>
@@ -459,7 +459,7 @@ namespace UI
             PlayerPrefs.SetFloat("moveSpeed", 90f);
             PlayerPrefs.SetFloat("turnSpeed", 100f);
 
-            PlayerPrefs.SetInt("WindowMode", 2);
+            PlayerPrefs.SetInt("WindowMode", 1);
             PlayerPrefs.SetInt("FPSLimit", 0);
             PlayerPrefs.SetInt("Resolution", 0);
             PlayerPrefs.SetInt("GraphicsPreset", 0);

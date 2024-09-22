@@ -64,9 +64,6 @@ public class GamePieceManager : MonoBehaviour
         _driveController = GetComponent<DriveController>();
         _ledStripController = GetComponent<LedStripController>();
 
-        currentGamePieceMode = GamePieceType.Cone;
-        currentGamePiece = GamePieceType.Cone;
-
         hiddenCube.SetActive(currentGamePieceMode == GamePieceType.Cube);
         hiddenCone.SetActive(currentGamePieceMode == GamePieceType.Cone);
 
