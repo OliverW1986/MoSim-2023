@@ -248,7 +248,7 @@ public class DriveController : MonoBehaviour
             }
         }
 
-        if ((_groundIntakeAction.ReadValue<float>() > 0.25f || _substationIntakeAction.ReadValue<float>() > 0.25f) &&
+        if ((_groundIntakeAction.ReadValue<float>() > 0.25f || _substationIntakeAction.ReadValue<float>() > 0.25f || intakeForce) &&
             GameManager.canRobotMove && canIntake)
         {
             robotPlayer.resource = intakeSound;
