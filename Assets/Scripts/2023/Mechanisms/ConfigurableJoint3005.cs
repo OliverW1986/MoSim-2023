@@ -156,14 +156,14 @@ namespace Mechanisms
                     {
                         StopAllCoroutines();
 
-                        StartCoroutine(extendTo(armSubstationIntakeAngleCube, armSubstationIntakeAngleCube, armSubstationIntakeAngleCube));
+                        StartCoroutine(extendTo(armSubstationIntakeAngleCube, stage1SubstationIntakeDistanceCube, wristSubstationIntakeAngleCube));
 
                     }
                     else
                     {
                         StopAllCoroutines();
 
-                        StartCoroutine(extendTo(armSubstationIntakeAngle, armSubstationIntakeAngle, armSubstationIntakeAngle));
+                        StartCoroutine(extendTo(armSubstationIntakeAngle, stage1SubstationIntakeDistance, wristSubstationIntakeAngle));
 
                     }
 
