@@ -51,8 +51,12 @@ public class StrikeZoneArm : MonoBehaviour
     private InputAction _lowAction;
     private InputAction _intakeDoubleSubstationAction;
     private InputAction _intakeGroundAction;
+    private InputAction _scoreAction;
 
     public bool isTransferring = false;
+    public bool isPlacing = false;
+
+    public float startAngle;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -70,6 +74,10 @@ public class StrikeZoneArm : MonoBehaviour
         _lowAction = InputSystem.actions.FindAction("Low");
         _intakeDoubleSubstationAction = InputSystem.actions.FindAction("IntakeDoubleSubstation");
         _intakeGroundAction = InputSystem.actions.FindAction("IntakeGround");
+
+        _scoreAction = InputSystem.actions.FindAction("Place");
+
+        startAngle = upperArm.transform.eulerAngles.x;
     }
 
     // Update is called once per frame
@@ -153,6 +161,17 @@ public class StrikeZoneArm : MonoBehaviour
             }
         }
 
+        if(
+            _scoreAction.ReadValue<float>() > 0 
+            && !isPlacing 
+            && _robotGamePieceManager.hasGamePiece 
+            && (_currentRobotState == RobotState.Middle || _currentRobotState == RobotState.High) 
+            && _robotGamePieceManager.currentGamePiece == GamePieceType.Cone
+            )
+        {
+            StartCoroutine(PlaceSequence());
+        }
+
         lowerArmSpring.targetPosition = Mathf.MoveTowards(lowerArmSpring.targetPosition, lowerTarget, lowerSpeed * Time.deltaTime);
         upperArmSpring.targetPosition = Mathf.MoveTowards(upperArmSpring.targetPosition, upperTarget, upperSpeed * Time.deltaTime);
 
@@ -161,6 +180,21 @@ public class StrikeZoneArm : MonoBehaviour
 
         _previousRobotState = _currentRobotState;
 
+    }
+
+    public IEnumerator PlaceSequence()
+    {
+        _robotGamePieceManager.canPlace = false;
+        isPlacing = true;
+        upperTarget -= 15;
+
+        yield return new WaitForSeconds(0.15f);
+
+        _robotGamePieceManager.canPlace = true;
+
+        isPlacing = false;
+
+        yield return safeRetract(stowLowerTarget, stowUpperTarget);
     }
 
     private IEnumerator safeGoToPos(float lower, float upper)
@@ -179,8 +213,9 @@ public class StrikeZoneArm : MonoBehaviour
 
     private IEnumerator safeRetract(float lower, float upper)
     {
+
         lowerTarget = intermediateLower;
-        upperTarget = Mathf.MoveTowards(upperTarget, upper, Mathf.Abs(upper - upperTarget) / 2);
+        upperTarget = Mathf.MoveTowards(upperTarget, upper, Mathf.Abs(upper - upperTarget) / 3);
 
         while (lowerArmSpring.targetPosition != intermediateLower)
         {
