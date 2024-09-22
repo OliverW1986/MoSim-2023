@@ -81,6 +81,8 @@ public class DriveController : MonoBehaviour
     private bool _parkScored;
 
     private ChargeStation _chargeStation;
+    private RobotSpawnController _robotSpawnController;
+    private GameObject _cineMachine;
 
     public bool canRotate = true;
     public bool canTranslate = true;
@@ -185,14 +187,25 @@ public class DriveController : MonoBehaviour
         _substationIntakeAction = InputSystem.actions.FindAction("IntakeDoubleSubstation");
         _restartAction = InputSystem.actions.FindAction("Restart");
 
+        _robotSpawnController = FindFirstObjectByType<RobotSpawnController>();
+        _cineMachine = GameObject.Find("CinemachineBrain");
+        
         _cameraMode = (CameraMode)PlayerPrefs.GetInt("cameraMode");
         switch (_cameraMode)
         {
             case CameraMode.DriverStation:
                 SetCameraMode(CameraMode.DriverStation);
+                if (isRedRobot)
+                {
+                    _robotSpawnController.redPanCam.SetActive(true);
+                }
+                else
+                {
+                    _robotSpawnController.bluePanCam.SetActive(true);
+                }
+                _cineMachine.SetActive(false);
                 thirdPersonCamera.SetActive(false);
                 firstPersonCamera.SetActive(false);
-                _panCamera.SetActive(true);
                 break;
             case CameraMode.ThirdPerson:
                 SetCameraMode(CameraMode.ThirdPerson);
@@ -318,7 +331,12 @@ public class DriveController : MonoBehaviour
 
                 Vector3 moveDirection;
                 _translateValue = _translateAction.ReadValue<Vector2>();
-
+                if (_cameraMode == CameraMode.DriverStation)
+                {
+                    _translateValue.x *= -1f;
+                    _translateValue.y *= -1f;
+                }
+                
                 _translateValue.x = Mathf.Sign(_translateValue.x) * Mathf.Pow(Mathf.Abs(_translateValue.x), 2f);
                 _translateValue.y = Mathf.Sign(_translateValue.y) * Mathf.Pow(Mathf.Abs(_translateValue.y), 2f);
 
@@ -549,8 +567,8 @@ public class DriveController : MonoBehaviour
 
     public enum CameraMode
     {
+        DriverStation,
         ThirdPerson,
-        FirstPerson,
-        DriverStation
+        FirstPerson
     }
 }

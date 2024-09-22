@@ -28,6 +28,9 @@ public class RobotSpawnController : MonoBehaviour
     [SerializeField] private Material redBumperMaterial;
     [SerializeField] private Material blueBumperMaterial;
     
+    [SerializeField] public GameObject bluePanCam;
+    [SerializeField] public GameObject redPanCam;
+    
     private void Start()
     {
         cameraBorder.SetActive(false);
@@ -87,7 +90,6 @@ public class RobotSpawnController : MonoBehaviour
             //Set correct robots & cameras active
             if (PlayerPrefs.GetString("alliance") == "red")
             {
-                // Instantiate(redRobotPrefabs[_redRobotIndex], redSpawn.position, redSpawn.rotation);
                 var robot = Instantiate(blueRobotPrefabs[_blueRobotIndex], redSpawn.position, redSpawn.rotation);
                 var driveController = robot.GetComponent<DriveController>();
                 driveController.isRedRobot = true;
