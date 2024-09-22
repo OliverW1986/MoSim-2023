@@ -19,3 +19,6 @@ MonoBehaviour:
   - robotName: BREAD
     robotImage: {fileID: 21300000, guid: a550363cc52459b4aae02b36fbe892a6, type: 3}
     robotNumber: 5940
+  - robotName: Mechanical Advantage
+    robotImage: {fileID: 21300000, guid: a550363cc52459b4aae02b36fbe892a6, type: 3}
+    robotNumber: 6328

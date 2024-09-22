@@ -26,6 +26,7 @@ public class GamePieceManager : MonoBehaviour
     [SerializeField] private Transform coneSpawnPoint;
     [SerializeField] private Transform cubeSpawnPoint;
     [SerializeField] private float coneSpeed;
+    [SerializeField] private Vector3 coneEjectDirection = new Vector3(0,0,1);
     [SerializeField] private float cubeSpeed;
     [SerializeField] private float placeLatency;
     [SerializeField] private float intakeLatency;
@@ -318,8 +319,16 @@ public class GamePieceManager : MonoBehaviour
             }
 
             var rb = cone.GetComponent<Rigidbody>();
-            rb.linearVelocity = GetComponent<Rigidbody>().linearVelocity +
-                                (coneSpawnPoint.forward.normalized * coneSpeed);
+            rb.linearVelocity = GetComponent<Rigidbody>().linearVelocity;
+                               
+
+            if(robotSettings == RobotSettings.MechanicalAdvantage)
+            {
+                rb.AddRelativeForce(coneEjectDirection * coneSpeed, ForceMode.Impulse);
+            } else
+            {
+                rb.linearVelocity += coneSpawnPoint.forward.normalized * coneSpeed;
+            }
             hiddenCone.SetActive(false);
 
             var conePosition = cone.transform.position;
