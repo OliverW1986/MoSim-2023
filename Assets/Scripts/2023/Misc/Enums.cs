@@ -10,7 +10,8 @@ public enum RobotSettings
     JackInTheBot,
     Bread,
     MechanicalAdvantage,
-    StrikeZone
+    StrikeZone,
+    RoboChargers
 }
 
 public enum GameState 

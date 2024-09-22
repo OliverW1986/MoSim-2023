@@ -1,10 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/UpdatedMenu/MainMenu.uss?fileID=7433441132597879392&amp;guid=a5a29638a79bf3e4d850b331a84d8ea1&amp;type=3#MainMenu" />
-    <ui:VisualElement name="Container" class="content-container">
-        <ui:Label text="MoSim &#10;Charged Up" class="title" />
-        <ui:Button text="PLAY" name="Play" class="button" style="margin-top: 325px;" />
-        <ui:Button text="SETTINGS" name="Settings" class="button" />
-        <ui:Button text="ABOUT" name="About" class="button" style="display: none;" />
-        <ui:Button text="QUIT" name="Quit" class="button" />
+    <ui:VisualElement name="Container" class="content-container" style="background-image: url(&quot;project://database/Assets/Imports/2023/Images/2910-5940-5460-3005-6328-Background.png?fileID=21300000&amp;guid=a256f76323f875049ab4c77289409bcf&amp;type=3#2910-5940-5460-3005-6328-Background&quot;); align-items: flex-end;">
+        <ui:Label text="MoSim Charged Up" class="title" />
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row; align-items: flex-end; margin-bottom: 55px;">
+            <ui:Button text="PLAY" name="Play" class="button" />
+            <ui:Button text="SETTINGS" name="Settings" class="button" />
+            <ui:Button text="ABOUT" name="About" class="button" style="display: none;" />
+            <ui:Button text="QUIT" name="Quit" class="button" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

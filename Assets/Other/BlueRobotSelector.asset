@@ -25,3 +25,6 @@ MonoBehaviour:
   - robotName: Strike Zone
     robotImage: {fileID: 21300000, guid: a550363cc52459b4aae02b36fbe892a6, type: 3}
     robotNumber: 5460
+  - robotName: RoboChargers
+    robotImage: {fileID: 21300000, guid: a550363cc52459b4aae02b36fbe892a6, type: 3}
+    robotNumber: 3005
