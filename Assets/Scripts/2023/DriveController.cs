@@ -74,6 +74,7 @@ public class DriveController : MonoBehaviour
     private InputAction _groundIntakeAction;
     private InputAction _substationIntakeAction;
     private InputAction _restartAction;
+    private InputAction _cameraFlipAction;
 
     private GameObject _panCamera;
 
@@ -86,6 +87,8 @@ public class DriveController : MonoBehaviour
 
     public bool canRotate = true;
     public bool canTranslate = true;
+    
+    private bool _cameraFlipped;
 
     protected void Start()
     {
@@ -186,6 +189,7 @@ public class DriveController : MonoBehaviour
         _groundIntakeAction = InputSystem.actions.FindAction("IntakeGround");
         _substationIntakeAction = InputSystem.actions.FindAction("IntakeDoubleSubstation");
         _restartAction = InputSystem.actions.FindAction("Restart");
+        _cameraFlipAction = InputSystem.actions.FindAction("CameraFlip");
 
         _robotSpawnController = FindFirstObjectByType<RobotSpawnController>();
         _cineMachine = GameObject.Find("CinemachineBrain");
@@ -319,6 +323,25 @@ public class DriveController : MonoBehaviour
             _parkScored = false;
             Score.SubScore(2, isRedRobot ? Alliance.Red : Alliance.Blue);
         }
+
+        if (_cameraFlipAction.triggered && _cameraMode == CameraMode.FirstPerson)
+        {
+            _cameraFlipped = !_cameraFlipped;
+            if (_cameraFlipped)
+            {
+                firstPersonCamera.transform.localPosition = new Vector3(firstPersonCamera.transform.localPosition.x,
+                    firstPersonCamera.transform.localPosition.y, -firstPersonCamera.transform.localPosition.z);
+                firstPersonCamera.transform.localRotation = Quaternion.Euler(155f,
+                    0, 180f);
+            }
+            else
+            {
+                firstPersonCamera.transform.localPosition = new Vector3(firstPersonCamera.transform.localPosition.x,
+                    firstPersonCamera.transform.localPosition.y, -firstPersonCamera.transform.localPosition.z);
+                firstPersonCamera.transform.localRotation = Quaternion.Euler(155f,
+                    180f, 180f);
+            }
+        }
     }
 
     protected void FixedUpdate()
@@ -331,7 +354,7 @@ public class DriveController : MonoBehaviour
 
                 Vector3 moveDirection;
                 _translateValue = _translateAction.ReadValue<Vector2>();
-                if (_cameraMode == CameraMode.DriverStation)
+                if (_cameraMode == CameraMode.DriverStation || (_cameraFlipped && _cameraMode == CameraMode.FirstPerson))
                 {
                     _translateValue.x *= -1f;
                     _translateValue.y *= -1f;
