@@ -171,6 +171,15 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraFlip"",
+                    ""type"": ""Button"",
+                    ""id"": ""202d76f8-8c72-41d9-a596-7c2649b9586f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -242,33 +251,11 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b9330f18-d949-41da-8171-acbdda69a787"",
-                    ""path"": ""<Joystick>/stick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Translate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""38fd9267-3099-4f4c-a31e-306f174b081f"",
                     ""path"": ""<Gamepad>/rightStick/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""dac88aab-9e5f-429d-841e-d0e87c886c59"",
-                    ""path"": ""<Joystick>/{Twist}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
                     ""action"": ""Rotate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -330,17 +317,6 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6041772a-142e-4db3-960e-eb24873f0df2"",
-                    ""path"": ""<HID::Logitech Logitech Extreme 3D>/hat/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Joystick"",
-                    ""action"": ""Low"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""5c13de5d-e365-4ca9-b1dd-f98b1c60599f"",
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
@@ -357,17 +333,6 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""IntakeDoubleSubstation"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6243cdae-87bc-4ce7-99b4-fc9993f3611f"",
-                    ""path"": ""<HID::Logitech Logitech Extreme 3D>/button5"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR;Joystick"",
                     ""action"": ""IntakeDoubleSubstation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -396,17 +361,6 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""daf10f6e-d467-425e-bf30-68c44e8594d0"",
-                    ""path"": ""<HID::Logitech Logitech Extreme 3D>/hat/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR;Joystick"",
-                    ""action"": ""High"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9a373812-781b-4634-9a1f-bf0b4390a22f"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -423,17 +377,6 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Middle"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1c64adcd-65fd-40fa-b73a-0b85b01722d3"",
-                    ""path"": ""<HID::Logitech Logitech Extreme 3D>/hat/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Joystick"",
                     ""action"": ""Middle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -462,17 +405,6 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e2a5ec5a-c0fd-41a6-a53e-b7551e58825b"",
-                    ""path"": ""<Joystick>/trigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Joystick"",
-                    ""action"": ""Place"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""cc809496-c86a-4690-925a-a22b652eb4b5"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
@@ -489,17 +421,6 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Stow"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""351314a0-581c-4b53-baa2-9d9275f03032"",
-                    ""path"": ""<HID::Logitech Logitech Extreme 3D>/hat/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Joystick"",
                     ""action"": ""Stow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -528,17 +449,6 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""cfa20bab-7f9e-4d25-bf70-f8f15bac5c13"",
-                    ""path"": ""<Joystick>/{SecondaryTrigger}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Joystick"",
-                    ""action"": ""IntakeGround"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""61fa72db-76ad-4ea9-bc9d-ad0db08be0fb"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
@@ -555,17 +465,6 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""GamePieceMode"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6f5a606f-1cc0-4d9d-aa24-8016b941c18c"",
-                    ""path"": ""<HID::Logitech Logitech Extreme 3D>/button6"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Joystick"",
                     ""action"": ""GamePieceMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -723,6 +622,28 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
                     ""action"": ""Climb"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfc9e7e2-008d-43ac-b9e7-004b984dd9c3"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""CameraFlip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""49dbf8b4-0930-42df-a2f8-ff82cec7d244"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CameraFlip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -775,6 +696,7 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
         m_Player_PanCamMove = m_Player.FindAction("PanCamMove", throwIfNotFound: true);
         m_Player_DeployClimber = m_Player.FindAction("DeployClimber", throwIfNotFound: true);
         m_Player_Climb = m_Player.FindAction("Climb", throwIfNotFound: true);
+        m_Player_CameraFlip = m_Player.FindAction("CameraFlip", throwIfNotFound: true);
     }
 
     ~@ChargedUp()
@@ -857,6 +779,7 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PanCamMove;
     private readonly InputAction m_Player_DeployClimber;
     private readonly InputAction m_Player_Climb;
+    private readonly InputAction m_Player_CameraFlip;
     public struct PlayerActions
     {
         private @ChargedUp m_Wrapper;
@@ -877,6 +800,7 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
         public InputAction @PanCamMove => m_Wrapper.m_Player_PanCamMove;
         public InputAction @DeployClimber => m_Wrapper.m_Player_DeployClimber;
         public InputAction @Climb => m_Wrapper.m_Player_Climb;
+        public InputAction @CameraFlip => m_Wrapper.m_Player_CameraFlip;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -934,6 +858,9 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
             @Climb.started += instance.OnClimb;
             @Climb.performed += instance.OnClimb;
             @Climb.canceled += instance.OnClimb;
+            @CameraFlip.started += instance.OnCameraFlip;
+            @CameraFlip.performed += instance.OnCameraFlip;
+            @CameraFlip.canceled += instance.OnCameraFlip;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -986,6 +913,9 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
             @Climb.started -= instance.OnClimb;
             @Climb.performed -= instance.OnClimb;
             @Climb.canceled -= instance.OnClimb;
+            @CameraFlip.started -= instance.OnCameraFlip;
+            @CameraFlip.performed -= instance.OnCameraFlip;
+            @CameraFlip.canceled -= instance.OnCameraFlip;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1039,5 +969,6 @@ public partial class @ChargedUp: IInputActionCollection2, IDisposable
         void OnPanCamMove(InputAction.CallbackContext context);
         void OnDeployClimber(InputAction.CallbackContext context);
         void OnClimb(InputAction.CallbackContext context);
+        void OnCameraFlip(InputAction.CallbackContext context);
     }
 }
