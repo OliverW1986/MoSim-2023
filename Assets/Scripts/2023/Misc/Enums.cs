@@ -11,7 +11,8 @@ public enum RobotSettings
     Bread,
     MechanicalAdvantage,
     StrikeZone,
-    RoboChargers
+    RoboChargers,
+    Enginerds
 }
 
 public enum GameState 
