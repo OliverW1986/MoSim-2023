@@ -17,8 +17,8 @@ public class GamePieceManager : MonoBehaviour
     [SerializeField] private Transform cubePathEnd;
     [SerializeField] private Transform cubePathEndAnchor;
 
-    [SerializeField] private bool doConePath;
-    [SerializeField] private bool doCubePath;
+    public bool doConePath;
+    public bool doCubePath;
 
     [SerializeField] private GameObject conePrefab;
     [SerializeField] private GameObject cubePrefab;
@@ -148,8 +148,8 @@ public class GamePieceManager : MonoBehaviour
         }
         else if (touchedGamePiece != null && cubeWithinIntakeCubeCollider && cubePath != null)
         {
-            // cubePath.bezierPath.MovePoint(0,
-            //     cubePath.transform.InverseTransformPoint(touchedGamePiece.transform.position));
+             cubePath.bezierPath.MovePoint(0,
+                 cubePath.transform.InverseTransformPoint(touchedGamePiece.transform.position));
         }
 
         if (coneWithinIntakeConeCollider && !hasGamePiece && _driveController.isIntaking)
