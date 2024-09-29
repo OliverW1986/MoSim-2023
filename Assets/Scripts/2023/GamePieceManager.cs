@@ -59,6 +59,8 @@ public class GamePieceManager : MonoBehaviour
     
     private SingleSubstation _singleSubstation;
 
+    public bool shouldSpawnCone;
+
     private void Start()
     {
         _driveController = GetComponent<DriveController>();
@@ -168,6 +170,14 @@ public class GamePieceManager : MonoBehaviour
         if (_spawnGamePiece.triggered)
         {
             _singleSubstation.gamePieceType = currentGamePieceMode;
+            _singleSubstation.requestSpawn = true;
+        }
+
+        if(shouldSpawnCone)
+        {
+            shouldSpawnCone = false;
+
+            _singleSubstation.gamePieceType = GamePieceType.Cone;
             _singleSubstation.requestSpawn = true;
         }
     }
