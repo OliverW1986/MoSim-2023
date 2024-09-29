@@ -12,7 +12,8 @@ public enum RobotSettings
     MechanicalAdvantage,
     StrikeZone,
     RoboChargers,
-    Enginerds
+    Enginerds,
+    StrykeForce
 }
 
 public enum GameState 
