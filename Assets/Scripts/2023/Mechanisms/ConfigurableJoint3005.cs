@@ -88,7 +88,7 @@ namespace Mechanisms
         {
             if (GameManager.canRobotMove)
             {
-                if (_stowAction.triggered || _intakeGroundAction.WasReleasedThisFrame() || _intakeDoubleSubstationAction.WasReleasedThisFrame())
+                if (_stowAction.triggered || _intakeGroundAction.WasReleasedThisFrame())
                 {
                     StopAllCoroutines();
 
@@ -152,28 +152,19 @@ namespace Mechanisms
                 }
                 else if (_intakeDoubleSubstationAction.WasPressedThisFrame())
                 {
-                    if (_gamePieceManager.currentGamePieceMode == GamePieceType.Cube)
-                    {
-                        StopAllCoroutines();
 
-                        StartCoroutine(extendTo(armSubstationIntakeAngleCube, stage1SubstationIntakeDistanceCube, wristSubstationIntakeAngleCube));
-
-                    }
-                    else
-                    {
-                        StopAllCoroutines();
-
-                        StartCoroutine(extendTo(armSubstationIntakeAngle, stage1SubstationIntakeDistance, wristSubstationIntakeAngle));
-
-                    }
+                    _gamePieceManager.shouldSpawnCone = true;
 
                     _currentRobotState = RobotState.IntakeDoubleSubstation;
                 }
                 else if ((_intakeGroundAction.WasPressedThisFrame() && !_previousRobotState.Equals(RobotState.Low)) || 
                             (_intakeGroundAction.WasPressedThisFrame() && !_previousRobotState.Equals(RobotState.IntakeDoubleSubstation)))
                 {
+
+
                     if (_gamePieceManager.currentGamePieceMode == GamePieceType.Cube)
                     {
+
 
                         if (_currentRobotState == RobotState.Stow)
                         {
@@ -192,7 +183,7 @@ namespace Mechanisms
                     else
                     {
 
-                        if(_currentRobotState == RobotState.Stow)
+                        if (_currentRobotState == RobotState.Stow)
                         {
                             StopAllCoroutines();
 
