@@ -8,17 +8,14 @@ public class ModelExtractor : AssetPostprocessor
     // This method is called every time assets are imported, reimported, or deleted
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
-        // Path to your .zip file
-        string zipFilePath = "Assets/Imports/2023/2767/2767.zip";
-        string extractedFilePath = "Assets/Imports/2023/2767/";
-
 
         // Check if the zip file has been imported
         foreach (string asset in importedAssets)
         {
-            if (asset == zipFilePath)
+
+            if (asset.Contains("Assets/Imports") && asset.Contains(".zip"))
             {
-                ExtractZip(zipFilePath, extractedFilePath);
+                ExtractZip(asset, asset.Substring(0, asset.LastIndexOf("/")+1));
                 AssetDatabase.Refresh(); // Refresh the asset database so Unity sees the new file
                 Debug.Log("Model extracted from .zip and imported successfully.");
             }

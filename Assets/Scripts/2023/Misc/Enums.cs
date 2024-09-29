@@ -13,7 +13,8 @@ public enum RobotSettings
     StrikeZone,
     RoboChargers,
     Enginerds,
-    StrykeForce
+    StrykeForce,
+    WildStang
 }
 
 public enum GameState 
