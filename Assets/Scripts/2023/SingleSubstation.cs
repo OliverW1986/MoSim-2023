@@ -15,6 +15,7 @@ public class SingleSubstation : MonoBehaviour
     private bool _canSpawn = true;
     
     private InputAction _spawnGamePiece;
+
     
     private void Start()
     {
@@ -27,7 +28,7 @@ public class SingleSubstation : MonoBehaviour
         {
             requestSpawn = false;
             _canSpawn = false;
-            var spawnedGameObject = Instantiate(cube, spawnLocation.position, Quaternion.identity);
+            var spawnedGameObject = Instantiate(gamePieceType == GamePieceType.Cube ? cube : cone, spawnLocation.position, Quaternion.identity);
             spawnedGameObject.GetComponent<Rigidbody>().AddForce(spawnLocation.forward * spawnForce, ForceMode.VelocityChange);
             spawnedGameObject.GetComponent<Rigidbody>().AddTorque(Random.insideUnitSphere * spawnForce, ForceMode.VelocityChange);
             StartCoroutine(ResetSpawn());

@@ -12,6 +12,7 @@ public enum RobotSettings
     MechanicalAdvantage,
     StrikeZone,
     RoboChargers,
+    Enginerds,
     StrykeForce,
     WildStang
 }
