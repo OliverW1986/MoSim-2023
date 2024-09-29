@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d018ef0365c4364f9910e450e4f2afe, type: 3}
   m_Name: BlueRobotSelector
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   robot:
   - robotName: Jack in the Bot
     robotImage: {fileID: 21300000, guid: a550363cc52459b4aae02b36fbe892a6, type: 3}
@@ -31,6 +31,6 @@ MonoBehaviour:
   - robotName: Enginerds
     robotImage: {fileID: 21300000, guid: a550363cc52459b4aae02b36fbe892a6, type: 3}
     robotNumber: 2337
-  - robotName: StykeForce
+  - robotName: Styke Force
     robotImage: {fileID: 21300000, guid: a550363cc52459b4aae02b36fbe892a6, type: 3}
     robotNumber: 2767
