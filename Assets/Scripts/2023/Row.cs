@@ -18,6 +18,8 @@ public class Row : MonoBehaviour
 
     public void Update()
     {
+        if (GameManager.GameState == GameState.End) return;
+
         //Check for links
         int lastStart = 0;
         bool linkStarted = false;

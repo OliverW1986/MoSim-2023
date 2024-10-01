@@ -89506,6 +89506,7 @@ MonoBehaviour:
   isPlacing: 0
   requestPlace: 0
   canPlace: 1
+  shouldSpawnCone: 0
 --- !u!82 &3936702805803335324
 AudioSource:
   m_ObjectHideFlags: 0
@@ -90121,7 +90122,7 @@ MonoBehaviour:
   intakeSound: {fileID: 8300000, guid: 237d544feee8c1242ad71c004d91a25b, type: 3}
   swerveSound: {fileID: 8300000, guid: cdda101431f82d54bb4836d6a9dd8079, type: 3}
   gearSound: {fileID: 8300000, guid: cdda101431f82d54bb4836d6a9dd8079, type: 3}
-  moveSpeed: 1900
+  moveSpeed: 1700
   rotationSpeed: 2250
   isRedRobot: 0
   isIntaking: 0

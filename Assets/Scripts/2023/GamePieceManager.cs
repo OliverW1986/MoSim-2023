@@ -169,7 +169,8 @@ public class GamePieceManager : MonoBehaviour
         
         if (_spawnGamePiece.triggered)
         {
-            _singleSubstation.gamePieceType = currentGamePieceMode;
+            //Bandaid fix for now because cube should be the primary mode if the thing is dropped
+            _singleSubstation.gamePieceType = GamePieceType.Cube;
             _singleSubstation.requestSpawn = true;
         }
 
