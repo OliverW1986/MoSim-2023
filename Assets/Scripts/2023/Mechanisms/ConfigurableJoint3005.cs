@@ -119,14 +119,33 @@ namespace Mechanisms
                     if (_gamePieceManager.currentGamePieceMode == GamePieceType.Cube)
                     {
                         StopAllCoroutines();
-                        StartCoroutine(extendTo(armMiddleAngleCube, stage1MiddleDistanceCube, wristMiddleAngleCube));
+
+                        if(_previousRobotState == RobotState.High)
+                        {
+                            StartCoroutine(retractFrom(armMiddleAngleCube, stage1MiddleDistanceCube, wristMiddleAngleCube));
+
+                        }
+                        else
+                        {
+                            StartCoroutine(extendTo(armMiddleAngleCube, stage1MiddleDistanceCube, wristMiddleAngleCube));
+
+                        }
 
                     }
                     else
                     {
                         StopAllCoroutines();
 
-                        StartCoroutine(extendTo(armMiddleAngle, stage1MiddleDistance, wristMiddleAngle));
+                        if (_previousRobotState == RobotState.High)
+                        {
+                            StartCoroutine(retractFrom(armMiddleAngle, stage1MiddleDistance, wristMiddleAngle));
+
+                        }
+                        else
+                        {
+                            StartCoroutine(extendTo(armMiddleAngle, stage1MiddleDistance, wristMiddleAngle));
+                        }
+
 
                     }
 
@@ -136,15 +155,34 @@ namespace Mechanisms
                 {
                     if (_gamePieceManager.currentGamePieceMode == GamePieceType.Cube)
                     {
-                        armTargetAngle = armLowAngleCube;
-                        stage1TargetDistance = stage1LowDistanceCube;
-                        wristTargetAngle = wristLowAngleCube;
+                        StopAllCoroutines();
+
+                        switch (_previousRobotState)
+                        {
+                            case(RobotState.High):
+                            case(RobotState.Middle):
+                                StartCoroutine(retractFrom(armLowAngleCube, stage1LowDistanceCube, wristLowAngleCube));
+                                break;
+                            default:
+                                StartCoroutine(extendTo(armLowAngleCube, stage1LowDistanceCube, wristLowAngleCube));
+                                break;
+                        }
+
                     }
                     else
                     {
-                        armTargetAngle = armLowAngle;
-                        stage1TargetDistance = stage1LowDistance;
-                        wristTargetAngle = wristLowAngle;
+                        StopAllCoroutines();
+
+                        switch (_previousRobotState)
+                        {
+                            case (RobotState.High):
+                            case (RobotState.Middle):
+                                StartCoroutine(retractFrom(armLowAngle, stage1LowDistance, wristLowAngle));
+                                break;
+                            default:
+                                StartCoroutine(extendTo(armLowAngle, stage1LowDistance, wristLowAngle));
+                                break;
+                        }
 
                     }
 
@@ -211,8 +249,10 @@ namespace Mechanisms
             _previousRobotState = _currentRobotState;
         }
 
-        private float getActualAngle(float eulerAngleReading)
+        private float getActualAngle()
         {
+            float eulerAngleReading = pivotRB.localEulerAngles.z;
+
             //in testing, should be about 55, progressively decreases to zero and then up
             if(eulerAngleReading <= starting.z)
             {
@@ -226,7 +266,7 @@ namespace Mechanisms
         private IEnumerator extendTo(float armAngle, float stage1Distance, float wristAngle)
         {
 
-            if(armAngle > 160)
+            if(armAngle > 160 && (getActualAngle() < 160 || getActualAngle() > 270))
             {
                 armTargetAngle = 160;
                 yield return new WaitForSeconds(0.2f);
@@ -236,7 +276,7 @@ namespace Mechanisms
                 armTargetAngle = armAngle;
             }
 
-            while (Mathf.Abs(getActualAngle(pivotRB.localEulerAngles.z) - armTargetAngle) > 10f)
+            while (Mathf.Abs(getActualAngle() - armTargetAngle) > 10f)
             {
                 
                 yield return null;
