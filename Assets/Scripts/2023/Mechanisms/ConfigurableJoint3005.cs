@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,6 +34,7 @@ namespace Mechanisms
         [SerializeField] private float armGroundIntakeAngle;
         [SerializeField] private float stage1GroundIntakeDistance;
         [SerializeField] private float wristGroundIntakeAngle;
+        [SerializeField] private float wristUprightGroundIntakeAngle;
 
         [SerializeField] private float armHighAngleCube;
         [SerializeField] private float stage1HighDistanceCube;
@@ -120,7 +123,7 @@ namespace Mechanisms
                     {
                         StopAllCoroutines();
 
-                        if(_previousRobotState == RobotState.High)
+                        if (_previousRobotState == RobotState.High)
                         {
                             StartCoroutine(retractFrom(armMiddleAngleCube, stage1MiddleDistanceCube, wristMiddleAngleCube));
 
@@ -159,8 +162,8 @@ namespace Mechanisms
 
                         switch (_previousRobotState)
                         {
-                            case(RobotState.High):
-                            case(RobotState.Middle):
+                            case (RobotState.High):
+                            case (RobotState.Middle):
                                 StartCoroutine(retractFrom(armLowAngleCube, stage1LowDistanceCube, wristLowAngleCube));
                                 break;
                             default:
@@ -195,7 +198,7 @@ namespace Mechanisms
 
                     _currentRobotState = RobotState.IntakeDoubleSubstation;
                 }
-                else if ((_intakeGroundAction.WasPressedThisFrame() && !_previousRobotState.Equals(RobotState.Low)) || 
+                else if ((_intakeGroundAction.WasPressedThisFrame() && !_previousRobotState.Equals(RobotState.Low)) ||
                             (_intakeGroundAction.WasPressedThisFrame() && !_previousRobotState.Equals(RobotState.IntakeDoubleSubstation)))
                 {
 
@@ -239,14 +242,63 @@ namespace Mechanisms
                     _currentRobotState = RobotState.IntakeGround;
                 }
             }
-            
+
             armPivot.targetRotation = Quaternion.Euler(0, 0, armTargetAngle);
             stage1.targetPosition = new Vector3(stage1TargetDistance, 0, 0);
             wrist.targetRotation = Quaternion.Euler(-wristTargetAngle, 0, 0);
 
+            if (_currentRobotState == RobotState.IntakeGround && _gamePieceManager.currentGamePieceMode == GamePieceType.Cone && !_gamePieceManager.hasGamePiece)
+            {
+                Transform closest = GetNearestCone();
 
+                Debug.DrawLine(wristRB.position, closest.position, Color.red);
+
+                if (closest != null)
+                {
+                    float angle = Quaternion.Angle(closest.rotation, Quaternion.Euler(270, 0, 0));
+
+                    if (angle < 5)
+                    {
+                        Debug.Log("setting angle");
+                        wristTargetAngle = wristUprightGroundIntakeAngle;
+                    } else
+                    {
+                        wristTargetAngle = wristGroundIntakeAngle;
+                    }
+                }
+            }
 
             _previousRobotState = _currentRobotState;
+        }
+
+        #nullable enable
+        public Transform? GetNearestCone()
+        {
+            try
+            {
+                GameObject[] cones = GameObject.FindGameObjectsWithTag("Cone");
+
+
+                GameObject closest = cones[0];
+                float distance = float.MaxValue;
+
+                foreach( GameObject obj in cones)
+                {
+                    float thisDistance = Vector3.Distance(wristRB.position, obj.transform.position);
+                    if (thisDistance < distance && !obj.name.Contains("Blue") && !obj.name.Contains("Blue"))
+                    {
+                        distance = thisDistance;
+                        closest  = obj;
+                    }
+                }
+
+                return closest.transform;
+            } catch (Exception e)
+            {
+                return null;
+            }
+            
+
         }
 
         private float getActualAngle()
@@ -282,13 +334,14 @@ namespace Mechanisms
                 yield return null;
             }
 
+            Debug.Log("Setting angle :)");
             stage1TargetDistance = stage1Distance;
             wristTargetAngle = wristAngle;
         }
 
         private IEnumerator retractFrom(float armAngle, float stage1Distance, float wristAngle)
         {
-
+            Debug.Log("retract angle");
             stage1TargetDistance = stage1Distance;
             wristTargetAngle = wristAngle;
 
