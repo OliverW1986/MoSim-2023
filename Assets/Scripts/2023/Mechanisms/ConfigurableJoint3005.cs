@@ -334,14 +334,12 @@ namespace Mechanisms
                 yield return null;
             }
 
-            Debug.Log("Setting angle :)");
             stage1TargetDistance = stage1Distance;
             wristTargetAngle = wristAngle;
         }
 
         private IEnumerator retractFrom(float armAngle, float stage1Distance, float wristAngle)
         {
-            Debug.Log("retract angle");
             stage1TargetDistance = stage1Distance;
             wristTargetAngle = wristAngle;
 
