@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -32,6 +34,7 @@ namespace Mechanisms
         [SerializeField] private float armGroundIntakeAngle;
         [SerializeField] private float stage1GroundIntakeDistance;
         [SerializeField] private float wristGroundIntakeAngle;
+        [SerializeField] private float wristUprightGroundIntakeAngle;
 
         [SerializeField] private float armHighAngleCube;
         [SerializeField] private float stage1HighDistanceCube;
@@ -119,14 +122,33 @@ namespace Mechanisms
                     if (_gamePieceManager.currentGamePieceMode == GamePieceType.Cube)
                     {
                         StopAllCoroutines();
-                        StartCoroutine(extendTo(armMiddleAngleCube, stage1MiddleDistanceCube, wristMiddleAngleCube));
+
+                        if (_previousRobotState == RobotState.High)
+                        {
+                            StartCoroutine(retractFrom(armMiddleAngleCube, stage1MiddleDistanceCube, wristMiddleAngleCube));
+
+                        }
+                        else
+                        {
+                            StartCoroutine(extendTo(armMiddleAngleCube, stage1MiddleDistanceCube, wristMiddleAngleCube));
+
+                        }
 
                     }
                     else
                     {
                         StopAllCoroutines();
 
-                        StartCoroutine(extendTo(armMiddleAngle, stage1MiddleDistance, wristMiddleAngle));
+                        if (_previousRobotState == RobotState.High)
+                        {
+                            StartCoroutine(retractFrom(armMiddleAngle, stage1MiddleDistance, wristMiddleAngle));
+
+                        }
+                        else
+                        {
+                            StartCoroutine(extendTo(armMiddleAngle, stage1MiddleDistance, wristMiddleAngle));
+                        }
+
 
                     }
 
@@ -136,15 +158,34 @@ namespace Mechanisms
                 {
                     if (_gamePieceManager.currentGamePieceMode == GamePieceType.Cube)
                     {
-                        armTargetAngle = armLowAngleCube;
-                        stage1TargetDistance = stage1LowDistanceCube;
-                        wristTargetAngle = wristLowAngleCube;
+                        StopAllCoroutines();
+
+                        switch (_previousRobotState)
+                        {
+                            case (RobotState.High):
+                            case (RobotState.Middle):
+                                StartCoroutine(retractFrom(armLowAngleCube, stage1LowDistanceCube, wristLowAngleCube));
+                                break;
+                            default:
+                                StartCoroutine(extendTo(armLowAngleCube, stage1LowDistanceCube, wristLowAngleCube));
+                                break;
+                        }
+
                     }
                     else
                     {
-                        armTargetAngle = armLowAngle;
-                        stage1TargetDistance = stage1LowDistance;
-                        wristTargetAngle = wristLowAngle;
+                        StopAllCoroutines();
+
+                        switch (_previousRobotState)
+                        {
+                            case (RobotState.High):
+                            case (RobotState.Middle):
+                                StartCoroutine(retractFrom(armLowAngle, stage1LowDistance, wristLowAngle));
+                                break;
+                            default:
+                                StartCoroutine(extendTo(armLowAngle, stage1LowDistance, wristLowAngle));
+                                break;
+                        }
 
                     }
 
@@ -157,7 +198,7 @@ namespace Mechanisms
 
                     _currentRobotState = RobotState.IntakeDoubleSubstation;
                 }
-                else if ((_intakeGroundAction.WasPressedThisFrame() && !_previousRobotState.Equals(RobotState.Low)) || 
+                else if ((_intakeGroundAction.WasPressedThisFrame() && !_previousRobotState.Equals(RobotState.Low)) ||
                             (_intakeGroundAction.WasPressedThisFrame() && !_previousRobotState.Equals(RobotState.IntakeDoubleSubstation)))
                 {
 
@@ -201,18 +242,69 @@ namespace Mechanisms
                     _currentRobotState = RobotState.IntakeGround;
                 }
             }
-            
+
             armPivot.targetRotation = Quaternion.Euler(0, 0, armTargetAngle);
             stage1.targetPosition = new Vector3(stage1TargetDistance, 0, 0);
             wrist.targetRotation = Quaternion.Euler(-wristTargetAngle, 0, 0);
 
+            if (_currentRobotState == RobotState.IntakeGround && _gamePieceManager.currentGamePieceMode == GamePieceType.Cone && !_gamePieceManager.hasGamePiece)
+            {
+                Transform closest = GetNearestCone();
 
+                Debug.DrawLine(wristRB.position, closest.position, Color.red);
+
+                if (closest != null)
+                {
+                    float angle = Quaternion.Angle(closest.rotation, Quaternion.Euler(270, 0, 0));
+
+                    if (angle < 5)
+                    {
+                        Debug.Log("setting angle");
+                        wristTargetAngle = wristUprightGroundIntakeAngle;
+                    } else
+                    {
+                        wristTargetAngle = wristGroundIntakeAngle;
+                    }
+                }
+            }
 
             _previousRobotState = _currentRobotState;
         }
 
-        private float getActualAngle(float eulerAngleReading)
+        #nullable enable
+        public Transform? GetNearestCone()
         {
+            try
+            {
+                GameObject[] cones = GameObject.FindGameObjectsWithTag("Cone");
+
+
+                GameObject closest = cones[0];
+                float distance = float.MaxValue;
+
+                foreach( GameObject obj in cones)
+                {
+                    float thisDistance = Vector3.Distance(wristRB.position, obj.transform.position);
+                    if (thisDistance < distance && !obj.name.Contains("Blue") && !obj.name.Contains("Blue"))
+                    {
+                        distance = thisDistance;
+                        closest  = obj;
+                    }
+                }
+
+                return closest.transform;
+            } catch (Exception e)
+            {
+                return null;
+            }
+            
+
+        }
+
+        private float getActualAngle()
+        {
+            float eulerAngleReading = pivotRB.localEulerAngles.z;
+
             //in testing, should be about 55, progressively decreases to zero and then up
             if(eulerAngleReading <= starting.z)
             {
@@ -226,7 +318,7 @@ namespace Mechanisms
         private IEnumerator extendTo(float armAngle, float stage1Distance, float wristAngle)
         {
 
-            if(armAngle > 160)
+            if(armAngle > 160 && (getActualAngle() < 160 || getActualAngle() > 270))
             {
                 armTargetAngle = 160;
                 yield return new WaitForSeconds(0.2f);
@@ -236,7 +328,7 @@ namespace Mechanisms
                 armTargetAngle = armAngle;
             }
 
-            while (Mathf.Abs(getActualAngle(pivotRB.localEulerAngles.z) - armTargetAngle) > 10f)
+            while (Mathf.Abs(getActualAngle() - armTargetAngle) > 10f)
             {
                 
                 yield return null;
@@ -248,7 +340,6 @@ namespace Mechanisms
 
         private IEnumerator retractFrom(float armAngle, float stage1Distance, float wristAngle)
         {
-
             stage1TargetDistance = stage1Distance;
             wristTargetAngle = wristAngle;
 
