@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -172,7 +173,14 @@ namespace UI
                 Destroy(currentRobot);
 
             }
-            currentRobot = SpawnSafeRobot(rs.GetRobotList()[_singleRobotSelect.index].robotPrefab);
+            try
+            {
+                currentRobot = SpawnSafeRobot(rs.GetRobotList()[_singleRobotSelect.index].robotPrefab);
+
+            } catch (Exception e)
+            {
+
+            }
 
 
             _singleRobotSelect.RegisterValueChangedCallback(_ =>
@@ -186,7 +194,15 @@ namespace UI
 
                 Destroy(currentRobot);
 
-                currentRobot = SpawnSafeRobot(rs.GetRobotList()[_singleRobotSelect.index].robotPrefab);
+                try
+                {
+                    currentRobot = SpawnSafeRobot(rs.GetRobotList()[_singleRobotSelect.index].robotPrefab);
+
+                }
+                catch (Exception e)
+                {
+
+                }
             });
 
             _singleRobotName.value =
@@ -445,6 +461,11 @@ namespace UI
 
             bot.GetComponentsInChildren<CinemachineBrain>()[0].enabled = false;
             bot.GetComponentsInChildren<CinemachineCamera>()[0].enabled = false;
+
+            if(!GameManager.canRobotMove)
+            {
+                GameManager.ToggleCanRobotMove();
+            }
 
             botCam.Target.TrackingTarget = bot.transform;
 
