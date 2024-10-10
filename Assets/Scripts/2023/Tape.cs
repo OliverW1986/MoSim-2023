@@ -30,28 +30,31 @@ public class Tape : MonoBehaviour, IResettable
             if (other.gameObject.CompareTag("Player") && GameManager.GameState == GameState.Auto && !_triggeredMobilityScore)
             {
                 _triggeredMobilityScore = true;
-                Score.blueScore += 3;
+                Score.AddScore(3, Alliance.Blue);
                 GameScoreTracker.BlueAutoLeavePoints += 3;
             }
             else if (_isThereASecondaryPlayer && other.gameObject.CompareTag("Player2") && GameManager.GameState == GameState.Auto && !_triggeredMobilityScoreForSecondaryPlayer) 
             {
                 _triggeredMobilityScoreForSecondaryPlayer = true;
-                Score.blueScore += 3;
+                Score.AddScore(3, Alliance.Blue);
+
                 GameScoreTracker.BlueAutoLeavePoints += 3;
             }
         }
         else
         {
-            if (other.gameObject.CompareTag("RedPlayer") && GameManager.GameState == GameState.Auto && !_triggeredMobilityScore)
+            if (other.gameObject.CompareTag("Player") && GameManager.GameState == GameState.Auto && !_triggeredMobilityScore)
             {
                 _triggeredMobilityScore = true;
-                Score.redScore += 3;
+                Score.AddScore(3, Alliance.Red);
+
                 GameScoreTracker.RedAutoLeavePoints += 3;
             }
-            else if (_isThereASecondaryPlayer && other.gameObject.CompareTag("RedPlayer2") && GameManager.GameState == GameState.Auto && !_triggeredMobilityScoreForSecondaryPlayer) 
+            else if (_isThereASecondaryPlayer && other.gameObject.CompareTag("Player2") && GameManager.GameState == GameState.Auto && !_triggeredMobilityScoreForSecondaryPlayer) 
             {
                 _triggeredMobilityScoreForSecondaryPlayer = true;
-                Score.redScore += 3;
+                Score.AddScore(3, Alliance.Red);
+
                 GameScoreTracker.RedAutoLeavePoints += 3;
             }
         }
