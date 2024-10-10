@@ -10,13 +10,7 @@ public class RobotSpawnController : MonoBehaviour
     private static bool _isMultiplayer;
     public static bool sameAlliance;
 
-    [SerializeField] private GameObject[] blueRobotPrefabs;
-
-    [SerializeField] private GameObject[] redRobotPrefabs;
-
-    [SerializeField] private GameObject[] secondaryBlueRobotPrefabs;
-
-    [SerializeField] private GameObject[] secondaryRedRobotPrefabs;
+    [SerializeField] private GameObject[] robotPrefabs;
 
     [SerializeField] private GameObject cameraBorder;
 
@@ -57,9 +51,9 @@ public class RobotSpawnController : MonoBehaviour
         {
             cameraBorder.SetActive(true);
 
-            Instantiate(redRobotPrefabs[_redRobotIndex], redSpawn.position, redSpawn.rotation);
+            //Instantiate(redRobotPrefabs[_redRobotIndex], redSpawn.position, redSpawn.rotation);
             
-            Instantiate(blueRobotPrefabs[_blueRobotIndex], blueSpawn.position, blueSpawn.rotation);
+            Instantiate(robotPrefabs[_blueRobotIndex], blueSpawn.position, blueSpawn.rotation);
         }
         else if (sameAlliance)
         {
@@ -67,40 +61,40 @@ public class RobotSpawnController : MonoBehaviour
 
             if (PlayerPrefs.GetString("alliance") == "red")
             {
-                Instantiate(redRobotPrefabs[_redRobotIndex], redSpawn.position, redSpawn.rotation);
+                //Instantiate(redRobotPrefabs[_redRobotIndex], redSpawn.position, redSpawn.rotation);
 
-                Instantiate(secondaryRedRobotPrefabs[_blueRobotIndex], secondaryRedSpawn.position,
-                    secondaryRedSpawn.rotation);
+                //Instantiate(secondaryRedRobotPrefabs[_blueRobotIndex], secondaryRedSpawn.position,
+                    //secondaryRedSpawn.rotation);
             }
             else
             {
-                Instantiate(blueRobotPrefabs[_blueRobotIndex], blueSpawn.position, blueSpawn.rotation);
+                Instantiate(robotPrefabs[_blueRobotIndex], blueSpawn.position, blueSpawn.rotation);
 
-                Instantiate(secondaryBlueRobotPrefabs[_redRobotIndex], secondaryBlueSpawn.position,
-                    secondaryBlueSpawn.rotation);
+                //Instantiate(secondaryBlueRobotPrefabs[_redRobotIndex], secondaryBlueSpawn.position,
+                   // secondaryBlueSpawn.rotation);
             }
         }
         else
         {
-            if(_blueRobotIndex >= blueRobotPrefabs.Length)
+            if(_blueRobotIndex >= robotPrefabs.Length)
             {
-                _blueRobotIndex = blueRobotPrefabs.Length - 1;
+                _blueRobotIndex = robotPrefabs.Length - 1;
             }
 
             //Set correct robots & cameras active
             if (PlayerPrefs.GetString("alliance") == "red")
             {
-                var robot = Instantiate(blueRobotPrefabs[_blueRobotIndex], redSpawn.position, redSpawn.rotation);
+                var robot = Instantiate(robotPrefabs[_blueRobotIndex], redSpawn.position, redSpawn.rotation);
                 var driveController = robot.GetComponent<DriveController>();
                 driveController.isRedRobot = true;
                 driveController.materialPrefab = redBumperMaterial;
-                driveController.reverseBumperAllianceText = true;
+                //driveController.reverseBumperAllianceText = true;
                 var cam = robot.GetComponentInChildren<CinemachineFollow>();
                 cam.FollowOffset = new Vector3(-14.5f, 11.9f, 0);
             }
             else
             {
-                var robot = Instantiate(blueRobotPrefabs[_blueRobotIndex], blueSpawn.position, blueSpawn.rotation);
+                var robot = Instantiate(robotPrefabs[_blueRobotIndex], blueSpawn.position, blueSpawn.rotation);
                 var driveController = robot.GetComponent<DriveController>();
                 driveController.isRedRobot = false;
                 driveController.materialPrefab = blueBumperMaterial;

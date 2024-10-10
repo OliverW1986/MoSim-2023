@@ -20,11 +20,18 @@ public class CommunityZone : MonoBehaviour
             }
         }
 
-        DriveController playerController = GameObject.FindWithTag("Player").GetComponent<DriveController>();
+        try
+        {
+            DriveController playerController = GameObject.FindWithTag("Player").GetComponent<DriveController>();
 
-        bool isRed = alliance == Alliance.Red;
+            bool isRed = alliance == Alliance.Red;
 
-        playerController.inCommunity = hasRobot && isRed == playerController.isRedRobot;
-        
+            playerController.inCommunity = hasRobot && isRed == playerController.isRedRobot;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e);
+
+        }
     }
 }
