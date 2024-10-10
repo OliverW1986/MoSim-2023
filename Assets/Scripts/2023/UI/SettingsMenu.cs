@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.LowLevelPhysics;
 using UnityEngine.UIElements;
 
 namespace UI
@@ -64,6 +67,9 @@ namespace UI
         private Toggle _bumpSounds;
         private Toggle _intakeSounds;
 
+        private VisualElement _backgroundImage;
+        private GameObject currentRobot;
+        [SerializeField] private CinemachineCamera botCam;
 
         public void OnEnable()
         {
@@ -111,6 +117,8 @@ namespace UI
             _blue2Btn = _root.Query<Button>("Blue2");
             _blue3Btn = _root.Query<Button>("Blue3");
             _blue4Btn = _root.Query<Button>("Blue4");
+
+            _backgroundImage = _root.Query<VisualElement>("SettingsContainer");
 
             InitializeButtonState(_red1Btn, "Red1");
             InitializeButtonState(_red2Btn, "Red2");
@@ -160,6 +168,21 @@ namespace UI
             _singleRobotSelect.choices = rs.GetRobotList().Select(robot => robot.robotName).ToList();
             _singleRobotSelect.index = PlayerPrefs.GetInt("blueRobotSettings");
 
+            if(currentRobot != null)
+            {
+                Destroy(currentRobot);
+
+            }
+            try
+            {
+                currentRobot = SpawnSafeRobot(rs.GetRobotList()[_singleRobotSelect.index].robotPrefab);
+
+            } catch (Exception e)
+            {
+
+            }
+
+
             _singleRobotSelect.RegisterValueChangedCallback(_ =>
             {
                 PlayerPrefs.SetInt("blueRobotSettings", _singleRobotSelect.index);
@@ -168,6 +191,18 @@ namespace UI
                     PlayerPrefs.GetString(PlayerPrefs.GetString("alliance").Equals("blue") ? "blueName" : "redName",
                         rs.GetRobotList()[_singleRobotSelect.index].robotNumber.ToString());
                 PlayerPrefs.Save();
+
+                Destroy(currentRobot);
+
+                try
+                {
+                    currentRobot = SpawnSafeRobot(rs.GetRobotList()[_singleRobotSelect.index].robotPrefab);
+
+                }
+                catch (Exception e)
+                {
+
+                }
             });
 
             _singleRobotName.value =
@@ -404,6 +439,37 @@ namespace UI
                 PlayerPrefs.SetInt("IntakeSounds", _intakeSounds.value ? 1 : 0);
                 PlayerPrefs.Save();
             });
+        }
+
+        private void FixedUpdate()
+        {
+            if (currentRobot != null)
+            {
+                currentRobot.transform.Rotate(Vector3.up, 0.05f);
+            }
+        }
+
+        public GameObject SpawnSafeRobot(GameObject robot)
+        {
+            GameObject bot = Instantiate(robot);
+
+            bot.GetComponent<Rigidbody>().isKinematic = true;
+            bot.GetComponent<DriveController>().enabled = false;
+            bot.GetComponent<GamePieceManager>().enabled = false;
+            bot.GetComponent<BackToMenuButton>().enabled = false;
+            bot.GetComponent<BackToMenuButton>().enabled = false;
+
+            bot.GetComponentsInChildren<CinemachineBrain>()[0].enabled = false;
+            bot.GetComponentsInChildren<CinemachineCamera>()[0].enabled = false;
+
+            if(!GameManager.canRobotMove)
+            {
+                GameManager.ToggleCanRobotMove();
+            }
+
+            botCam.Target.TrackingTarget = bot.transform;
+
+            return bot;
         }
 
         public void Update()

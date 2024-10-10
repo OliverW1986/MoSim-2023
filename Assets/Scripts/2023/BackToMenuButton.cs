@@ -19,7 +19,14 @@ public class BackToMenuButton : MonoBehaviour
 
     private void OnDisable()
     {
-        _controls.Player.Disable();
+        try
+        {
+            _controls.Player.Menu.Disable();
+        }
+        catch
+        {
+            // ignored
+        }
     }
 
     public void LoadMenu() 

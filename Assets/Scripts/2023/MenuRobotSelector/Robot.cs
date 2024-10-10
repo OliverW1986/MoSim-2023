@@ -5,6 +5,6 @@ using UnityEngine;
 public class Robot
 {
     public string robotName;
-    public Sprite robotImage;
+    public GameObject robotPrefab;
     public int robotNumber;
 }
