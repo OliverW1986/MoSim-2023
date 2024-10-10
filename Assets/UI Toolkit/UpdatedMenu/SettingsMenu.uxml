@@ -6,6 +6,7 @@
                 <engine:Button name="BackButton" class="back-button" />
                 <engine:Label text="SETTINGS" name="SettingsLabel" />
             </engine:VisualElement>
+            <engine:VisualElement name="BotPreview" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI%20Toolkit/UpdatedMenu/Bot%20Preview.renderTexture?fileID=8400000&amp;guid=7a71a923d46d98c4abef3aa2ea44886a&amp;type=2#Bot Preview&quot;); -unity-background-scale-mode: scale-and-crop; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px;" />
             <engine:VisualElement name="ResetButtonContainer" class="reset">
                 <engine:Button name="ResetButton" class="back-button" />
                 <engine:Label text="RESET" name="ResetLabel" />

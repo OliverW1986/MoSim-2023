@@ -69,7 +69,6 @@ public class BlueRobotManager : MonoBehaviour
     private void UpdateCharacter(int selectedOption) 
     {   
         var robot = rs.GetRobot(selectedOption);
-        robotImage.sprite = robot.robotImage;
         nameText.text = robot.robotName;
     }
 }
