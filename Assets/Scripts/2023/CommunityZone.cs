@@ -5,6 +5,8 @@ public class CommunityZone : MonoBehaviour
     [SerializeField] private Collider[] communityZones;
     public bool hasRobot;
 
+    public Alliance alliance;
+
     private void Update()
     {
         hasRobot = false;
@@ -17,7 +19,12 @@ public class CommunityZone : MonoBehaviour
                 hasRobot = true;
             }
         }
-    
-        GameObject.FindWithTag("Player").GetComponent<DriveController>().inCommunity = hasRobot;
+
+        DriveController playerController = GameObject.FindWithTag("Player").GetComponent<DriveController>();
+
+        bool isRed = alliance == Alliance.Red;
+
+        playerController.inCommunity = hasRobot && isRed == playerController.isRedRobot;
+        
     }
 }
